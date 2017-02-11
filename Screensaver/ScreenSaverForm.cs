@@ -31,9 +31,9 @@ namespace Screensaver
         bool useCustom;
         bool useDefault;
         int changeInterval;
-        int currentSeconds;
-        ImageList images;
+        List<String> imagePaths;
         Random random;
+        int currentSeconds;
 
         public ScreenSaverForm(Rectangle Bounds)
         {
@@ -45,8 +45,8 @@ namespace Screensaver
         {
             Cursor.Hide();
             TopMost = true;
-            images = new ImageList();
             random = new Random();
+            imagePaths = new List<string>();
 
             // Load Registry-Keys
             RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\MJScreenSaver");
@@ -75,22 +75,26 @@ namespace Screensaver
                 }
             }
 
+            // Load pictures from custom path
             if (useCustom && Directory.Exists(folderPath))
             {
                 foreach (String imagePath in Directory.GetFiles(folderPath, "*.jpg"))
                 {
-                    try
-                    {
-                        Image img = Image.FromFile(imagePath);
-                        if (img != null) images.Images.Add(img);
-                    }
-                    catch(Exception ex)
-                    {
-                        MessageBox.Show(ex.StackTrace);
-                    }
+                    imagePaths.Add(imagePath);
                 }
             }
 
+            // Load pictures from default path
+            if (useDefault)
+            {
+                string path = System.Environment.CurrentDirectory;
+                string path2 = path.Substring(0, path.LastIndexOf("bin")) + "DefaultImages";
+
+                foreach (String imagePath in Directory.GetFiles(path2))
+                {
+                    imagePaths.Add(imagePath);
+                }
+            }
 
             // Timer starts at 1, not 0
             currentSeconds = 1;
@@ -117,9 +121,7 @@ namespace Screensaver
 
         private void timer_Tick(object sender, EventArgs e)
         {
-            MessageBox.Show("Loading Image");
-            
-            this.BackgroundImage = images.Images[random.Next(0, images.Images.Count)];
+            this.BackgroundImage = Image.FromFile(imagePaths[random.Next(0, imagePaths.Count)]);
             this.BackgroundImageLayout = ImageLayout.Zoom;
         }
     }
