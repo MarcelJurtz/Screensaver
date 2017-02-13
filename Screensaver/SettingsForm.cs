@@ -23,6 +23,8 @@ namespace Screensaver
         bool useCustom;
         bool useDefault;
         int intervalSeconds;
+        string customText;
+        string customTextColor;
 
         // Registry-Keys
         private void SettingsForm_Load(object sender, EventArgs e)
@@ -35,6 +37,8 @@ namespace Screensaver
                 useCustom = false;
                 useDefault = true;
                 intervalSeconds = 30;
+                customText = "";
+                customTextColor = Color.Black.ToString();
             }
             else
             {
@@ -45,6 +49,8 @@ namespace Screensaver
                     useCustom = Convert.ToBoolean((string)key.GetValue("useCustom"));
                     useDefault = Convert.ToBoolean((string)key.GetValue("useDefault"));
                     intervalSeconds = (int)key.GetValue("intervalSeconds");
+                    customText = (string)key.GetValue("customText");
+                    customTextColor = (string)key.GetValue("customTextColor");
                 }
                 catch(Exception ex)
                 {
@@ -62,6 +68,7 @@ namespace Screensaver
             chkUseDefault.Checked = useDefault;
             txtFolderPath.Text = folderpath;
             txtChangeInterval.Text = intervalSeconds.ToString();
+            txtCustomText.Text = customText;
 
         }
 
@@ -72,7 +79,9 @@ namespace Screensaver
             key.SetValue("folderpath", txtFolderPath.Text);
             key.SetValue("useCustom", chkUseCustom.Checked);
             key.SetValue("useDefault", chkUseDefault.Checked);
-            key.SetValue("intervalSeconds", Convert.ToInt32(txtChangeInterval.Text));        
+            key.SetValue("intervalSeconds", Convert.ToInt32(txtChangeInterval.Text));
+            key.SetValue("customText", txtCustomText.Text);
+            key.SetValue("customTextColor", customTextColor);        
         }
 
         // Button Cancel
@@ -117,6 +126,12 @@ namespace Screensaver
             {
                 e.Handled = true;
             }
+        }
+
+        private void cmdSelectColor_Click(object sender, EventArgs e)
+        {
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+                customTextColor = colorDialog.Color.ToArgb().ToString();
         }
     }
 }

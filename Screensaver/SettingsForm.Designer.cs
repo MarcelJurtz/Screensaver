@@ -39,6 +39,10 @@
             this.cmdFolderSelect = new System.Windows.Forms.Button();
             this.txtChangeInterval = new System.Windows.Forms.TextBox();
             this.lblChangeInterval = new System.Windows.Forms.Label();
+            this.txtCustomText = new System.Windows.Forms.TextBox();
+            this.lblCustomText = new System.Windows.Forms.Label();
+            this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.cmdSelectColor = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblCopyrightA
@@ -58,7 +62,7 @@
             this.cmdCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmdCancel.Font = new System.Drawing.Font("Liberation Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmdCancel.ForeColor = System.Drawing.Color.Black;
-            this.cmdCancel.Location = new System.Drawing.Point(24, 177);
+            this.cmdCancel.Location = new System.Drawing.Point(24, 226);
             this.cmdCancel.Margin = new System.Windows.Forms.Padding(4);
             this.cmdCancel.Name = "cmdCancel";
             this.cmdCancel.Size = new System.Drawing.Size(222, 47);
@@ -72,7 +76,7 @@
             this.cmdSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmdSave.Font = new System.Drawing.Font("Liberation Sans", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmdSave.ForeColor = System.Drawing.Color.Black;
-            this.cmdSave.Location = new System.Drawing.Point(264, 177);
+            this.cmdSave.Location = new System.Drawing.Point(264, 226);
             this.cmdSave.Margin = new System.Windows.Forms.Padding(4);
             this.cmdSave.Name = "cmdSave";
             this.cmdSave.Size = new System.Drawing.Size(222, 47);
@@ -118,10 +122,10 @@
             // cmdFolderSelect
             // 
             this.cmdFolderSelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmdFolderSelect.Location = new System.Drawing.Point(374, 145);
+            this.cmdFolderSelect.Location = new System.Drawing.Point(374, 144);
             this.cmdFolderSelect.Margin = new System.Windows.Forms.Padding(4);
             this.cmdFolderSelect.Name = "cmdFolderSelect";
-            this.cmdFolderSelect.Size = new System.Drawing.Size(112, 24);
+            this.cmdFolderSelect.Size = new System.Drawing.Size(112, 27);
             this.cmdFolderSelect.TabIndex = 10;
             this.cmdFolderSelect.Text = "Auswählen";
             this.cmdFolderSelect.UseVisualStyleBackColor = true;
@@ -146,12 +150,45 @@
             this.lblChangeInterval.TabIndex = 12;
             this.lblChangeInterval.Text = "Wechselintervall (in Sekunden):";
             // 
+            // txtCustomText
+            // 
+            this.txtCustomText.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCustomText.Location = new System.Drawing.Point(71, 177);
+            this.txtCustomText.Margin = new System.Windows.Forms.Padding(4);
+            this.txtCustomText.Name = "txtCustomText";
+            this.txtCustomText.Size = new System.Drawing.Size(295, 24);
+            this.txtCustomText.TabIndex = 13;
+            // 
+            // lblCustomText
+            // 
+            this.lblCustomText.AutoSize = true;
+            this.lblCustomText.Location = new System.Drawing.Point(21, 180);
+            this.lblCustomText.Name = "lblCustomText";
+            this.lblCustomText.Size = new System.Drawing.Size(40, 18);
+            this.lblCustomText.TabIndex = 14;
+            this.lblCustomText.Text = "Text:";
+            // 
+            // cmdSelectColor
+            // 
+            this.cmdSelectColor.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmdSelectColor.Location = new System.Drawing.Point(374, 176);
+            this.cmdSelectColor.Margin = new System.Windows.Forms.Padding(4);
+            this.cmdSelectColor.Name = "cmdSelectColor";
+            this.cmdSelectColor.Size = new System.Drawing.Size(112, 27);
+            this.cmdSelectColor.TabIndex = 15;
+            this.cmdSelectColor.Text = "Farbe";
+            this.cmdSelectColor.UseVisualStyleBackColor = true;
+            this.cmdSelectColor.Click += new System.EventHandler(this.cmdSelectColor_Click);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(499, 246);
+            this.ClientSize = new System.Drawing.Size(499, 286);
+            this.Controls.Add(this.cmdSelectColor);
+            this.Controls.Add(this.lblCustomText);
+            this.Controls.Add(this.txtCustomText);
             this.Controls.Add(this.lblChangeInterval);
             this.Controls.Add(this.txtChangeInterval);
             this.Controls.Add(this.cmdFolderSelect);
@@ -185,5 +222,9 @@
         private System.Windows.Forms.Button cmdFolderSelect;
         private System.Windows.Forms.TextBox txtChangeInterval;
         private System.Windows.Forms.Label lblChangeInterval;
+        private System.Windows.Forms.TextBox txtCustomText;
+        private System.Windows.Forms.Label lblCustomText;
+        private System.Windows.Forms.ColorDialog colorDialog;
+        private System.Windows.Forms.Button cmdSelectColor;
     }
 }

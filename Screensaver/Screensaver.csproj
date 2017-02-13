@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>favicon.ico</ApplicationIcon>
+    <ApplicationIcon>font-awesome_4-7-0_heart-o_256_128_b30000_none.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
+    <Content Include="font-awesome_4-7-0_heart-o_256_128_b30000_none.ico" />
     <None Include="Resources\demo.png" />
   </ItemGroup>
   <ItemGroup>

@@ -30,11 +30,22 @@
         {
             this.components = new System.ComponentModel.Container();
             this.timer = new System.Windows.Forms.Timer(this.components);
+            this.lblCustom = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // timer
             // 
             this.timer.Tick += new System.EventHandler(this.timer_Tick);
+            // 
+            // lblCustom
+            // 
+            this.lblCustom.AutoSize = true;
+            this.lblCustom.BackColor = System.Drawing.Color.Transparent;
+            this.lblCustom.Location = new System.Drawing.Point(113, 314);
+            this.lblCustom.Name = "lblCustom";
+            this.lblCustom.Size = new System.Drawing.Size(35, 13);
+            this.lblCustom.TabIndex = 0;
+            this.lblCustom.Text = "label1";
             // 
             // ScreenSaverForm
             // 
@@ -42,6 +53,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(1024, 720);
+            this.Controls.Add(this.lblCustom);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "ScreenSaverForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
@@ -51,12 +63,14 @@
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ScreenSaverForm_MouseClick);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ScreenSaverForm_MouseMove);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.Timer timer;
+        private System.Windows.Forms.Label lblCustom;
     }
 }
 

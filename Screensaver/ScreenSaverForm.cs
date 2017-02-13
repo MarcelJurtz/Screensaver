@@ -34,6 +34,9 @@ namespace Screensaver
         List<String> imagePaths;
         Random random;
         int currentSeconds;
+        string customText;
+        string customTextColor;
+        Color foreground;
 
         public ScreenSaverForm(Rectangle Bounds)
         {
@@ -57,6 +60,8 @@ namespace Screensaver
                 useCustom = false;
                 useDefault = true;
                 changeInterval = 30;
+                customText = "";
+                customTextColor = Color.Black.ToString();
             }
             else
             {
@@ -67,6 +72,9 @@ namespace Screensaver
                     useCustom = Convert.ToBoolean((string)key.GetValue("useCustom"));
                     useDefault = Convert.ToBoolean((string)key.GetValue("useDefault"));
                     changeInterval = (int)key.GetValue("intervalSeconds");
+                    customText = (string)key.GetValue("customText");
+                    customTextColor = (string)key.GetValue("customTextColor");
+                    foreground = Color.FromArgb(Convert.ToInt32(customTextColor));
                 }
                 catch (Exception ex)
                 {
@@ -78,7 +86,14 @@ namespace Screensaver
             // Load pictures from custom path
             if (useCustom && Directory.Exists(folderPath))
             {
+                // JPG
                 foreach (String imagePath in Directory.GetFiles(folderPath, "*.jpg"))
+                {
+                    imagePaths.Add(imagePath);
+                }
+
+                // PNG
+                foreach (String imagePath in Directory.GetFiles(folderPath, "*.png"))
                 {
                     imagePaths.Add(imagePath);
                 }
@@ -99,6 +114,21 @@ namespace Screensaver
             // Timer starts at 1, not 0
             currentSeconds = 1;
             timer.Interval = 1000 * changeInterval;
+            // Set Initial Background
+            this.BackgroundImage = Image.FromFile(imagePaths[random.Next(0, imagePaths.Count)]);
+            this.BackgroundImageLayout = ImageLayout.Zoom;
+
+            // Load Label
+            if(customText != "")
+            {
+                Rectangle area = Screen.FromControl(this).WorkingArea;
+                lblCustom.AutoSize = true;
+                lblCustom.Font = new Font(lblCustom.Font.FontFamily, 48);
+                lblCustom.Location = new Point(100, area.Height - 150);
+                lblCustom.Text = customText;
+                lblCustom.ForeColor = foreground;                
+            }
+
             timer.Start();
 
         }
