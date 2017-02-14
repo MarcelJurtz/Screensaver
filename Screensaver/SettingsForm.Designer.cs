@@ -109,11 +109,12 @@
             this.chkUseCustom.TabIndex = 8;
             this.chkUseCustom.Text = "Eigene Bilder verwenden";
             this.chkUseCustom.UseVisualStyleBackColor = true;
+            this.chkUseCustom.CheckedChanged += new System.EventHandler(this.chkUseCustom_CheckedChanged);
             // 
             // txtFolderPath
             // 
             this.txtFolderPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtFolderPath.Location = new System.Drawing.Point(24, 145);
+            this.txtFolderPath.Location = new System.Drawing.Point(24, 110);
             this.txtFolderPath.Margin = new System.Windows.Forms.Padding(4);
             this.txtFolderPath.Name = "txtFolderPath";
             this.txtFolderPath.Size = new System.Drawing.Size(342, 24);
@@ -122,7 +123,7 @@
             // cmdFolderSelect
             // 
             this.cmdFolderSelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmdFolderSelect.Location = new System.Drawing.Point(374, 144);
+            this.cmdFolderSelect.Location = new System.Drawing.Point(374, 109);
             this.cmdFolderSelect.Margin = new System.Windows.Forms.Padding(4);
             this.cmdFolderSelect.Name = "cmdFolderSelect";
             this.cmdFolderSelect.Size = new System.Drawing.Size(112, 27);
@@ -134,7 +135,7 @@
             // txtChangeInterval
             // 
             this.txtChangeInterval.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtChangeInterval.Location = new System.Drawing.Point(245, 110);
+            this.txtChangeInterval.Location = new System.Drawing.Point(245, 144);
             this.txtChangeInterval.Margin = new System.Windows.Forms.Padding(4);
             this.txtChangeInterval.Name = "txtChangeInterval";
             this.txtChangeInterval.Size = new System.Drawing.Size(241, 24);
@@ -144,7 +145,7 @@
             // lblChangeInterval
             // 
             this.lblChangeInterval.AutoSize = true;
-            this.lblChangeInterval.Location = new System.Drawing.Point(24, 113);
+            this.lblChangeInterval.Location = new System.Drawing.Point(24, 147);
             this.lblChangeInterval.Name = "lblChangeInterval";
             this.lblChangeInterval.Size = new System.Drawing.Size(214, 18);
             this.lblChangeInterval.TabIndex = 12;

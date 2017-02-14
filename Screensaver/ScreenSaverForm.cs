@@ -86,6 +86,8 @@ namespace Screensaver
             // Load pictures from custom path
             if (useCustom && Directory.Exists(folderPath))
             {
+
+
                 // JPG
                 foreach (String imagePath in Directory.GetFiles(folderPath, "*.jpg"))
                 {
@@ -97,6 +99,7 @@ namespace Screensaver
                 {
                     imagePaths.Add(imagePath);
                 }
+
             }
 
             // Load pictures from default path
@@ -115,21 +118,40 @@ namespace Screensaver
             currentSeconds = 1;
             timer.Interval = 1000 * changeInterval;
             // Set Initial Background
-            this.BackgroundImage = Image.FromFile(imagePaths[random.Next(0, imagePaths.Count)]);
-            this.BackgroundImageLayout = ImageLayout.Zoom;
+            if(imagePaths.Count > 0)
+            {
+                this.BackgroundImage = Image.FromFile(imagePaths[random.Next(0, imagePaths.Count)]);
+                this.BackgroundImageLayout = ImageLayout.Zoom;
+            }
+
 
             // Load Label
-            if(customText != "")
+            if (customText != "")
             {
                 Rectangle area = Screen.FromControl(this).WorkingArea;
                 lblCustom.AutoSize = true;
                 lblCustom.Font = new Font(lblCustom.Font.FontFamily, 48);
-                lblCustom.Location = new Point(100, area.Height - 150);
+                lblCustom.Location = new Point(100, area.Height / 2 - lblCustom.Height / 2);
                 lblCustom.Text = customText;
-                lblCustom.ForeColor = foreground;                
+                lblCustom.ForeColor = foreground;
+            }
+            else
+            {
+                lblCustom.Text = "";
             }
 
-            timer.Start();
+            if (imagePaths.Count > 0)
+            {
+                timer.Start();
+            }
+            else
+            {
+                Rectangle area = Screen.FromControl(this).WorkingArea;
+                lblCustom.AutoSize = true;
+                lblCustom.Font = new Font(lblCustom.Font.FontFamily, 48);
+                lblCustom.Location = new Point(area.Width / 2 - lblCustom.Width / 2, area.Height / 2 - lblCustom.Height / 2);
+                lblCustom.Text = "Keine Bilder festgelegt!";
+            }
 
         }
 

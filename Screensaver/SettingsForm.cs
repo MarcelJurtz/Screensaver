@@ -70,6 +70,9 @@ namespace Screensaver
             txtChangeInterval.Text = intervalSeconds.ToString();
             txtCustomText.Text = customText;
 
+            txtFolderPath.Enabled = chkUseCustom.Checked;
+            cmdFolderSelect.Enabled = chkUseCustom.Checked;
+
         }
 
         // Create and set Registry-Key
@@ -132,6 +135,12 @@ namespace Screensaver
         {
             if (colorDialog.ShowDialog() == DialogResult.OK)
                 customTextColor = colorDialog.Color.ToArgb().ToString();
+        }
+
+        private void chkUseCustom_CheckedChanged(object sender, EventArgs e)
+        {
+            txtFolderPath.Enabled = chkUseCustom.Checked;
+            cmdFolderSelect.Enabled = chkUseCustom.Checked;
         }
     }
 }
