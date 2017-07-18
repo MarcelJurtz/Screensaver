@@ -19,9 +19,9 @@ namespace Screensaver
             InitializeComponent();
         }
 
-        String folderpath;
-        bool useCustom;
-        bool useDefault;
+        String imgPath;
+        bool showText;
+        bool showDateTime;
         int intervalSeconds;
         string customText;
         string customTextColor;
@@ -33,10 +33,7 @@ namespace Screensaver
             if (key == null)
             {
                 // Defaultsettings
-                folderpath = "";
-                useCustom = false;
-                useDefault = true;
-                intervalSeconds = 30;
+                imgPath = "";
                 customText = "";
                 customTextColor = Color.Black.ToString();
             }
@@ -45,12 +42,11 @@ namespace Screensaver
                 try
                 {
                     // Registry-Settings
-                    folderpath = (string)key.GetValue("folderpath");
-                    useCustom = Convert.ToBoolean((string)key.GetValue("useCustom"));
-                    useDefault = Convert.ToBoolean((string)key.GetValue("useDefault"));
-                    intervalSeconds = (int)key.GetValue("intervalSeconds");
+                    imgPath = (string)key.GetValue("imagepath");
                     customText = (string)key.GetValue("customText");
                     customTextColor = (string)key.GetValue("customTextColor");
+                    showText = (bool)key.GetValue("showText");
+                    showDateTime = (bool)key.GetValue("showDateTime");
                 }
                 catch(Exception ex)
                 {
@@ -59,30 +55,26 @@ namespace Screensaver
                 }
             }
 
-            if (!Directory.Exists(folderpath))
+            if (!File.Exists(imgPath))
             {
-                folderpath = "";
+                imgPath = "";
             }
 
-            chkUseCustom.Checked = useCustom;
-            chkUseDefault.Checked = useDefault;
-            txtFolderPath.Text = folderpath;
-            txtChangeInterval.Text = intervalSeconds.ToString();
+            txtFolderPath.Text = imgPath;
             txtCustomText.Text = customText;
-
-            txtFolderPath.Enabled = chkUseCustom.Checked;
-            cmdFolderSelect.Enabled = chkUseCustom.Checked;
-
+            chkShowDateTime.Checked = showDateTime;
+            chkShowText.Checked = showText;
+            ofdImageSelector.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png)|*.jpg;*.jpeg;*.jpe;*.jfif;*.png";
+            ofdImageSelector.FileName = "";
         }
 
         // Create and set Registry-Key
         private void saveKey()
         {
             RegistryKey key = Registry.CurrentUser.CreateSubKey("SOFTWARE\\MJScreenSaver");
-            key.SetValue("folderpath", txtFolderPath.Text);
-            key.SetValue("useCustom", chkUseCustom.Checked);
-            key.SetValue("useDefault", chkUseDefault.Checked);
-            key.SetValue("intervalSeconds", Convert.ToInt32(txtChangeInterval.Text));
+            key.SetValue("imagepath", txtFolderPath.Text);
+            key.SetValue("showText", chkShowText.Checked);
+            key.SetValue("showDateTime", chkShowDateTime.Checked);
             key.SetValue("customText", txtCustomText.Text);
             key.SetValue("customTextColor", customTextColor);        
         }
@@ -96,7 +88,7 @@ namespace Screensaver
         // Button Save
         private void cmdSave_Click(object sender, EventArgs e)
         {
-            if (chkUseCustom.Checked && txtFolderPath.Text == "") MessageBox.Show("Kein Pfad für Bilder festgelegt.\nBitte füge einen Pfad ein.", "Fehler beim Speicher", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (txtFolderPath.Text == "" || !File.Exists(txtFolderPath.Text)) MessageBox.Show("Kein Pfad für Bilder festgelegt.\nBitte füge einen Pfad ein.", "Fehler beim Speicher", MessageBoxButtons.OK, MessageBoxIcon.Information);
             else
             {
                 saveKey();
@@ -104,30 +96,11 @@ namespace Screensaver
             }            
         }
 
-
-        // Controls
-        private void chkUseDefault_CheckedChanged(object sender, EventArgs e)
-        {
-            if (!chkUseCustom.Checked)
-            {
-                chkUseDefault.Checked = true;
-            }
-        }
-
         private void cmdFolderSelect_Click(object sender, EventArgs e)
         {
-            if (fbd.ShowDialog() == DialogResult.OK)
+            if (ofdImageSelector.ShowDialog() == DialogResult.OK)
             {
-                txtFolderPath.Text = fbd.SelectedPath;
-            }
-        }
-      
-        private void txtChangeInterval_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            // Only accept numbers as Input
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
-            {
-                e.Handled = true;
+                txtFolderPath.Text = ofdImageSelector.FileName;
             }
         }
 
@@ -135,12 +108,6 @@ namespace Screensaver
         {
             if (colorDialog.ShowDialog() == DialogResult.OK)
                 customTextColor = colorDialog.Color.ToArgb().ToString();
-        }
-
-        private void chkUseCustom_CheckedChanged(object sender, EventArgs e)
-        {
-            txtFolderPath.Enabled = chkUseCustom.Checked;
-            cmdFolderSelect.Enabled = chkUseCustom.Checked;
         }
     }
 }

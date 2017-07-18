@@ -27,13 +27,9 @@ namespace Screensaver
         [DllImport("user32.dll")]
         static extern bool GetClientRect(IntPtr hWnd, out Rectangle lpRect);
 
-        String folderPath;
-        bool useCustom;
-        bool useDefault;
-        int changeInterval;
-        List<String> imagePaths;
-        Random random;
-        int currentSeconds;
+        String imagePath;
+        bool showText;
+        bool showDateTime;
         string customText;
         string customTextColor;
         Color foreground;
@@ -48,18 +44,15 @@ namespace Screensaver
         {
             Cursor.Hide();
             TopMost = true;
-            random = new Random();
-            imagePaths = new List<string>();
 
             // Load Registry-Keys
             RegistryKey key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\MJScreenSaver");
             if (key == null)
             {
                 // Defaultsettings
-                folderPath = "";
-                useCustom = false;
-                useDefault = true;
-                changeInterval = 30;
+                imagePath = "";
+                showText = false;
+                showDateTime = false;
                 customText = "";
                 customTextColor = Color.Black.ToString();
             }
@@ -68,10 +61,9 @@ namespace Screensaver
                 try
                 {
                     // Registry-Settings
-                    folderPath = (string)key.GetValue("folderpath");
-                    useCustom = Convert.ToBoolean((string)key.GetValue("useCustom"));
-                    useDefault = Convert.ToBoolean((string)key.GetValue("useDefault"));
-                    changeInterval = (int)key.GetValue("intervalSeconds");
+                    imagePath = (string)key.GetValue("imagepath");
+                    showText = Convert.ToBoolean((string)key.GetValue("showText"));
+                    showDateTime = Convert.ToBoolean((string)key.GetValue("showDateTime"));
                     customText = (string)key.GetValue("customText");
                     customTextColor = (string)key.GetValue("customTextColor");
                     foreground = Color.FromArgb(Convert.ToInt32(customTextColor));
@@ -84,49 +76,14 @@ namespace Screensaver
             }
 
             // Load pictures from custom path
-            if (useCustom && Directory.Exists(folderPath))
+            if (File.Exists(imagePath))
             {
-
-
-                // JPG
-                foreach (String imagePath in Directory.GetFiles(folderPath, "*.jpg"))
-                {
-                    imagePaths.Add(imagePath);
-                }
-
-                // PNG
-                foreach (String imagePath in Directory.GetFiles(folderPath, "*.png"))
-                {
-                    imagePaths.Add(imagePath);
-                }
-
-            }
-
-            // Load pictures from default path
-            if (useDefault)
-            {
-                string path = System.Environment.CurrentDirectory;
-                string path2 = path.Substring(0, path.LastIndexOf("bin")) + "DefaultImages";
-
-                foreach (String imagePath in Directory.GetFiles(path2))
-                {
-                    imagePaths.Add(imagePath);
-                }
-            }
-
-            // Timer starts at 1, not 0
-            currentSeconds = 1;
-            timer.Interval = 1000 * changeInterval;
-            // Set Initial Background
-            if(imagePaths.Count > 0)
-            {
-                this.BackgroundImage = Image.FromFile(imagePaths[random.Next(0, imagePaths.Count)]);
+                this.BackgroundImage = Image.FromFile(imagePath);
                 this.BackgroundImageLayout = ImageLayout.Zoom;
             }
 
-
             // Load Label
-            if (customText != "")
+            if (customText != "" && showText)
             {
                 Rectangle area = Screen.FromControl(this).WorkingArea;
                 lblCustom.AutoSize = true;
@@ -139,20 +96,6 @@ namespace Screensaver
             {
                 lblCustom.Text = "";
             }
-
-            if (imagePaths.Count > 0)
-            {
-                timer.Start();
-            }
-            else
-            {
-                Rectangle area = Screen.FromControl(this).WorkingArea;
-                lblCustom.AutoSize = true;
-                lblCustom.Font = new Font(lblCustom.Font.FontFamily, 48);
-                lblCustom.Location = new Point(area.Width / 2 - lblCustom.Width / 2, area.Height / 2 - lblCustom.Height / 2);
-                lblCustom.Text = "Keine Bilder festgelegt!";
-            }
-
         }
 
         // Terminate app when user interacts
@@ -169,12 +112,6 @@ namespace Screensaver
         private void ScreenSaverForm_KeyPress(object sender, KeyPressEventArgs e)
         {
             Application.Exit();
-        }
-
-        private void timer_Tick(object sender, EventArgs e)
-        {
-            this.BackgroundImage = Image.FromFile(imagePaths[random.Next(0, imagePaths.Count)]);
-            this.BackgroundImageLayout = ImageLayout.Zoom;
         }
     }
 }

@@ -28,14 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.timer = new System.Windows.Forms.Timer(this.components);
             this.lblCustom = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // timer
-            // 
-            this.timer.Tick += new System.EventHandler(this.timer_Tick);
             // 
             // lblCustom
             // 
@@ -68,8 +62,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Timer timer;
         private System.Windows.Forms.Label lblCustom;
     }
 }
