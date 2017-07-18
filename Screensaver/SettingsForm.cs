@@ -45,8 +45,8 @@ namespace Screensaver
                     imgPath = (string)key.GetValue("imagepath");
                     customText = (string)key.GetValue("customText");
                     customTextColor = (string)key.GetValue("customTextColor");
-                    showText = (bool)key.GetValue("showText");
-                    showDateTime = (bool)key.GetValue("showDateTime");
+                    showText = Convert.ToBoolean((string)key.GetValue("showText")); ;
+                    showDateTime = Convert.ToBoolean((string)key.GetValue("showDateTime"));
                 }
                 catch(Exception ex)
                 {

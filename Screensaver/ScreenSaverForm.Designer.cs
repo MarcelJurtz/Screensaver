@@ -28,18 +28,45 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.lblCustom = new System.Windows.Forms.Label();
+            this.lblTime = new System.Windows.Forms.Label();
+            this.tClockTick = new System.Windows.Forms.Timer(this.components);
+            this.lblDate = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblCustom
             // 
             this.lblCustom.AutoSize = true;
             this.lblCustom.BackColor = System.Drawing.Color.Transparent;
-            this.lblCustom.Location = new System.Drawing.Point(113, 314);
+            this.lblCustom.Location = new System.Drawing.Point(100, 100);
             this.lblCustom.Name = "lblCustom";
-            this.lblCustom.Size = new System.Drawing.Size(35, 13);
+            this.lblCustom.Size = new System.Drawing.Size(0, 13);
             this.lblCustom.TabIndex = 0;
-            this.lblCustom.Text = "label1";
+            // 
+            // lblTime
+            // 
+            this.lblTime.AutoSize = true;
+            this.lblTime.BackColor = System.Drawing.Color.Transparent;
+            this.lblTime.Location = new System.Drawing.Point(100, 300);
+            this.lblTime.Name = "lblTime";
+            this.lblTime.Size = new System.Drawing.Size(0, 13);
+            this.lblTime.TabIndex = 1;
+            // 
+            // tClockTick
+            // 
+            this.tClockTick.Enabled = true;
+            this.tClockTick.Interval = 1000;
+            this.tClockTick.Tick += new System.EventHandler(this.tClockTick_Tick);
+            // 
+            // lblDate
+            // 
+            this.lblDate.AutoSize = true;
+            this.lblDate.BackColor = System.Drawing.Color.Transparent;
+            this.lblDate.Location = new System.Drawing.Point(100, 500);
+            this.lblDate.Name = "lblDate";
+            this.lblDate.Size = new System.Drawing.Size(0, 13);
+            this.lblDate.TabIndex = 2;
             // 
             // ScreenSaverForm
             // 
@@ -47,6 +74,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(1024, 720);
+            this.Controls.Add(this.lblDate);
+            this.Controls.Add(this.lblTime);
             this.Controls.Add(this.lblCustom);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "ScreenSaverForm";
@@ -63,6 +92,9 @@
 
         #endregion
         private System.Windows.Forms.Label lblCustom;
+        private System.Windows.Forms.Label lblTime;
+        private System.Windows.Forms.Timer tClockTick;
+        private System.Windows.Forms.Label lblDate;
     }
 }
 

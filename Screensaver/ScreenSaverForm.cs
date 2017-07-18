@@ -34,10 +34,13 @@ namespace Screensaver
         string customTextColor;
         Color foreground;
 
+        Rectangle area;
+
         public ScreenSaverForm(Rectangle Bounds)
         {
             InitializeComponent();
             this.Bounds = Bounds;
+            area = Screen.FromControl(this).WorkingArea;
         }
 
         private void ScreenSaverForm_Load(object sender, EventArgs e)
@@ -84,17 +87,33 @@ namespace Screensaver
 
             // Load Label
             if (customText != "" && showText)
-            {
-                Rectangle area = Screen.FromControl(this).WorkingArea;
+            {            
                 lblCustom.AutoSize = true;
                 lblCustom.Font = new Font(lblCustom.Font.FontFamily, 48);
-                lblCustom.Location = new Point(100, area.Height / 2 - lblCustom.Height / 2);
+                lblCustom.Location = new Point(100, 100);
                 lblCustom.Text = customText;
                 lblCustom.ForeColor = foreground;
             }
             else
             {
                 lblCustom.Text = "";
+            }
+
+            if(showDateTime)
+            {
+                lblDate.AutoSize = true;
+                lblDate.Font = new Font(lblDate.Font.FontFamily, 48);
+                lblDate.Location = new Point(100, area.Height - lblDate.Height / 2 - 100);
+                lblDate.Text = DateTime.Now.ToLongDateString();
+                lblDate.ForeColor = foreground;
+
+                lblTime.AutoSize = true;
+                lblTime.Font = new Font(lblTime.Font.FontFamily, 72);
+                lblTime.Location = new Point(100, area.Height - lblDate.Height / 2 - lblTime.Height - 100);
+                lblTime.Text = DateTime.Now.ToLongTimeString();
+                lblTime.ForeColor = foreground;
+
+                
             }
         }
 
@@ -112,6 +131,14 @@ namespace Screensaver
         private void ScreenSaverForm_KeyPress(object sender, KeyPressEventArgs e)
         {
             Application.Exit();
+        }
+
+        private void tClockTick_Tick(object sender, EventArgs e)
+        {
+            if(showDateTime)
+            {
+                lblTime.Text = DateTime.Now.ToLongTimeString();
+            }
         }
     }
 }
